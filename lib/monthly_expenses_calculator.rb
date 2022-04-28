@@ -58,24 +58,6 @@ module MonthlyExpensesCalculator
 
         total
     end
-
-    def draw_expenses_result(expenses, total_expenses)
-        puts 'Concept           | Units'
-        puts '------------------------------'
-
-        expenses.each do |expense|
-            case expense[0]
-            when 'TRANSPORTATION'
-                puts "#{expense[0]}    | #{expense[1]}"
-            when 'MEAL'
-                puts "#{expense[0]}              | #{expense[1]}"
-            when 'PARKING'
-                puts "#{expense[0]}           | #{expense[1]}"
-            end
-        end
-        puts '------------------------------'
-        puts "Total             | #{total_expenses}"
-    end
 end
 
 
