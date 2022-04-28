@@ -8,10 +8,10 @@ describe 'monthly_expenses_calculator' do
         end
     end
     
-    describe '#calculate_total_expenses_amounts' do
+    describe '#format_expenses_data' do
         it 'should get total amounts of data provided' do
             data = get_expenses_data('lib/data.csv')
-            expect(calculate_total_expenses_amounts(data)).to eq({
+            expect(format_expenses_data(data)).to eq({
                 transportation: 110,
                 meals: 4,
                 parking: 35
@@ -91,6 +91,19 @@ describe 'monthly_expenses_calculator' do
 
             it 'throw error when negative value' do
                 expect{calculate_parking(-3)}.to raise_error(ArgumentError)
+            end
+        end
+    end
+
+    describe '#calculate_total_month_expenses' do
+        context 'when proper data provided' do
+            it 'should calculate the total amount of expenses' do
+                subject = {
+                    transportation: 110,
+                    meals: 4,
+                    parking: 35
+                }
+                expect(calculate_total_month_expenses(subject)).to eq(76.30)
             end
         end
     end
