@@ -26,6 +26,7 @@ def calculate_total_expenses_amounts(expenses)
 end
 
 def calculate_transportation(transportation)
+    raise ArgumentError if  transportation < 0
     return transportation * 0.12 if transportation <= 100
     
     transportation -= 100
@@ -33,6 +34,7 @@ def calculate_transportation(transportation)
 end
 
 def calculate_meals(meals)
+    raise ArgumentError if  meals < 0
     return meals * 10 if meals <= 3
 
     meals -= 3
@@ -40,6 +42,7 @@ def calculate_meals(meals)
 end
 
 def calculate_parking(parking)
+    raise ArgumentError if  parking < 0
     return parking if parking <= 20
 
     parking -= 20
