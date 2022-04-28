@@ -39,3 +39,9 @@ def calculate_meals(meals)
     return 30 + (meals * 6)
 end
 
+def calculate_parking(parking)
+    return parking if parking <= 20
+
+    parking -= 20
+    return 20 + (parking.to_f / 2)
+end
