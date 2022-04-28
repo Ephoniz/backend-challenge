@@ -14,4 +14,8 @@ describe 'monthly_expenses_calculator' do
             parking: 35
         })
     end
+
+    it 'should properly calculate total transportation expenses' do
+        expect(calculate_transportation(110)).to eq(12.8)
+    end
 end

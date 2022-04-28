@@ -25,4 +25,12 @@ def calculate_total_expenses_amounts(expenses)
     return total_expenses_amount
 end
 
+def calculate_transportation(transportation)
+    return transportation * 0.12 if transportation <= 100
+    
+    transportation -= 100
+    return 12 + (transportation * 0.08)
+end
+
+
 
