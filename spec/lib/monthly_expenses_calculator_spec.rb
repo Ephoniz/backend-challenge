@@ -18,4 +18,8 @@ describe 'monthly_expenses_calculator' do
     it 'should properly calculate total transportation expenses' do
         expect(calculate_transportation(110)).to eq(12.8)
     end
+
+    it 'should properly calculate total meals expenses' do
+        expect(calculate_meals(4)).to eq(36)
+    end
 end

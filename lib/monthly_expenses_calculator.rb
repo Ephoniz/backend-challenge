@@ -32,5 +32,10 @@ def calculate_transportation(transportation)
     return 12 + (transportation * 0.08)
 end
 
+def calculate_meals(meals)
+    return meals * 10 if meals <= 3
 
+    meals -= 3
+    return 30 + (meals * 6)
+end
 
