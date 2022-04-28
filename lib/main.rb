@@ -1,4 +1,5 @@
 require_relative 'monthly_expenses_calculator'
+include MonthlyExpensesCalculator
 
 months = ['lib/first_month.csv', 'lib/second_month.csv']
 
