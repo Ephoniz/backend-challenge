@@ -1,8 +1,13 @@
-require 'csv'
+require 'json'
 
 module MonthlyExpensesCalculator
-    def get_expenses_data(csv_directory)
-        CSV.parse(File.read(csv_directory))
+    EXPENSES_PARAMETERS_JSON = "./expenses_values.json"
+
+    def calculate_total_month_expenses(month_expenses)
+        total = 0.00
+        total += calculate_expense(month_expenses[:transportation], "TRANSPORTATION")
+        total += calculate_expense(month_expenses[:meals], "MEALS")
+        total += calculate_expense(month_expenses[:parking], "PARKING")
     end
 
     def format_expenses_data(expenses)
@@ -15,48 +20,37 @@ module MonthlyExpensesCalculator
         expenses.each do |expense|
             case expense[0]
             when 'TRANSPORTATION'
-                total_expenses_amount[:transportation] += expense[1].to_i
+                total_expenses_amount[:transportation] += expense[1].to_f
             when 'MEAL'
-                total_expenses_amount[:meals] += expense[1].to_i
+                total_expenses_amount[:meals] += expense[1].to_f
             when 'PARKING'
-                total_expenses_amount[:parking] += expense[1].to_i
+                total_expenses_amount[:parking] += expense[1].to_f
             end
         end
 
         return total_expenses_amount
     end
 
-    def calculate_transportation(transportation)
-        raise ArgumentError if  transportation < 0
-        return transportation * 0.12 if transportation <= 100
-        
-        transportation -= 100
-        return 12 + (transportation * 0.08)
+    private
+
+    def calculate_expense(expense, expense_name)
+        e = get_expense_parameters(expense_name)
+        raise ArgumentError if expense < 0
+        return expense * e["first_price"] if expense <= e["limit"]
+
+        expense -= e["limit"]
+        (e["limit"] * e["first_price"]) + (expense * e["second_price"])
     end
 
-    def calculate_meals(meals)
-        raise ArgumentError if  meals < 0
-        return meals * 10 if meals <= 3
+    def get_expense_parameters(expense, expense_json = EXPENSES_PARAMETERS_JSON)
+        file = open_file(expense_json)
 
-        meals -= 3
-        return 30 + (meals * 6)
-    end
-
-    def calculate_parking(parking)
-        raise ArgumentError if  parking < 0
-        return parking if parking <= 20
-
-        parking -= 20
-        return 20 + (parking.to_f / 2)
-    end
-
-    def calculate_total_month_expenses(month_expenses)
-        total = 0.00
-        total += calculate_transportation(month_expenses[:transportation])
-        total += calculate_meals(month_expenses[:meals])
-        total += calculate_parking(month_expenses[:parking])
-
-        total
+        begin
+            expenses_parameters = JSON.load file
+            expenses_parameters[expense]
+        rescue JSON::ParserError => e
+            raise JSON::ParserError, "Can't process json file: #{e.to_s}"
+        end
     end
 end
 

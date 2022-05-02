@@ -1,4 +1,6 @@
+require_relative 'file_utils'
 require_relative 'monthly_expenses_calculator'
+include FileUtils
 include MonthlyExpensesCalculator
 
 months = ['lib/first_month.csv', 'lib/second_month.csv']
@@ -18,11 +20,11 @@ def draw_expenses_result(expenses, total_expenses)
         end
     end
     puts '------------------------------'
-    puts "Total             | #{total_expenses}"
+    puts "Total             | #{'%.2f' % total_expenses}"
 end
 
 months.each do |month|
-    csv_data = get_expenses_data(month)
+    csv_data = get_csv_data(month)
     formated_data = format_expenses_data(csv_data)
     total = calculate_total_month_expenses(formated_data)
     

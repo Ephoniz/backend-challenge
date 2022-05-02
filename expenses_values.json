@@ -1,0 +1,20 @@
+{
+    "TRANSPORTATION" : {
+        "limit" : 100,
+        "first_price" : 0.12,
+        "second_price" : 0.08
+
+    },
+
+    "MEALS" : {
+        "limit" : 3,
+        "first_price" : 10,
+        "second_price" : 6
+    },
+
+    "PARKING" : {
+        "limit" : 20,
+        "first_price" : 1,
+        "second_price" : 0.5
+    }
+}
